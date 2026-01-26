@@ -1,0 +1,167 @@
+{
+  "info": {
+    "name": "Evangadi Forum API - Token Auto Updated",
+    "_postman_id": "forum-api-005",
+    "description": "Postman collection updated to automatically handle JWT token for all protected requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"abebe_tesfaye\",\n  \"first_name\": \"Abebe\",\n  \"last_name\": \"Tesfaye\",\n  \"email\": \"abetesfaye@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/user/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "user", "register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"abetesfaye@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/user/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "user", "login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.environment.set('token', jsonData.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "http://localhost:4000/api/user/profile",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "user", "profile"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Question",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"How to setup MAMP with Node?\",\n  \"description\": \"I want to connect my Node backend to MAMP MySQL. How do I do it?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/question",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "question"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Questions",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "http://localhost:4000/api/question",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "question"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Question",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "http://localhost:4000/api/question/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "question", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Answer",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"question_id\": 1,\n  \"answer\": \"You can connect Node to MAMP MySQL using mysql2 package and DB_PORT 8889.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/answer",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "answer"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Answers",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "http://localhost:4000/api/answer/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["api", "answer", "1"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [{ "key": "token", "value": "" }]
+}
