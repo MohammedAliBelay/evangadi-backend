@@ -12,7 +12,6 @@ const database = mysql.createPool({
   queueLimit: 0,
 });
 
-
 // Test the database connection
 database.getConnection((err, connection) => {
   if (err) {
